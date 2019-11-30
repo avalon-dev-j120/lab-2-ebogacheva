@@ -37,10 +37,11 @@ public class Task4 implements Task {
      * @param path путь к конфигурации
      * @return новый экземпляр типа {@link Properties}
      */
-    private Properties read(String path) throws FileNotFoundException, IOException {
-        FileReader reader = new FileReader(path);
-        Properties properties = new Properties();
-        properties.load(reader); 
-        return properties;
+    private Properties read(String path) throws IOException {
+        try(FileReader reader = new FileReader(path)) {
+            Properties properties = new Properties();
+            properties.load(reader);
+            return properties;
+        }
     }
 }

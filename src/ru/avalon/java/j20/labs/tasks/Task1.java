@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
 
 /**
  * Задание №1
@@ -26,7 +27,7 @@ public class Task1 implements Task {
         File input = new File("assets/countries.txt");
         File output = new File("countries_binary_mode_output.txt");
         String text = read(input);
-       write(output, text);
+        write(output, text);
 
         /*
          * TODO(Студент): Выполнить задание №1
@@ -59,20 +60,21 @@ public class Task1 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private String read(File file) throws IOException {
-        
-        InputStream stream = new FileInputStream (file);
-        ByteArrayOutputStream output =  new ByteArrayOutputStream();
-        byte[] buffer = new byte[16];
-        int len = 0;
-        while (len >= 0){
-            len = stream.read(buffer);
-            if (len >= 0){
-                 output.write(buffer, 0, len);
+
+        try(InputStream stream = new FileInputStream (file);
+            ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[16];
+            int len = 0;
+            while (len >= 0) {
+                len = stream.read(buffer);
+                if (len >= 0) {
+                    output.write(buffer, 0, len);
+                }
             }
+
+            byte[] res = output.toByteArray();
+            return new String(res);
         }
-        
-        byte[] res = output.toByteArray();
-        return new String(res);
        
         
     }
@@ -86,12 +88,12 @@ public class Task1 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private void write(File file, String text) throws IOException {
-        
-        OutputStream stream = new FileOutputStream(file);
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        byte[] buffer = text.getBytes();
-        stream.write(buffer, 0, buffer.length);
-        
+        try (OutputStream stream = new FileOutputStream(file);
+             ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+            byte[] buffer = text.getBytes();
+            stream.write(buffer, 0, buffer.length);
+        }
+
     }
         
     

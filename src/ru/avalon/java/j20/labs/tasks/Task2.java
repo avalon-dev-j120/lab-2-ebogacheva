@@ -61,16 +61,15 @@ public class Task2 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private String read(File file) throws IOException {
-        
-        Reader reader = new FileReader(file);
-        char[] buffer = new char[16];
-        int len;
-        StringBuilder builder = new StringBuilder(0);
-        while ((len = reader.read(buffer)) != -1){
-            builder.append(buffer);
-        }
+        try (Reader reader = new FileReader(file)) {
+            char[] buffer = new char[16];
+            StringBuilder builder = new StringBuilder(0);
+            while ((reader.read(buffer)) != -1) {
+                builder.append(buffer);
+            }
 
-        return builder.toString(); 
+            return builder.toString();
+        }
     }
 
     /**

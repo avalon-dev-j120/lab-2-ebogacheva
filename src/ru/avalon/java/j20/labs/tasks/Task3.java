@@ -59,15 +59,15 @@ public class Task3 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private Collection<String> read(File file) throws IOException {
-        
-        Reader reader = new FileReader(file);
-        BufferedReader buffer = new BufferedReader(reader);
-        String line;
-        Collection<String> result = new ArrayList<>();
-        while ((line = buffer.readLine()) != null){
-            result.add(line);
+        try (Reader reader = new FileReader(file);
+             BufferedReader buffer = new BufferedReader(reader)) {
+            String line;
+            Collection<String> result = new ArrayList<>();
+            while ((line = buffer.readLine()) != null) {
+                result.add(line);
+            }
+            return result;
         }
-        return result; 
     }
 
     /**
@@ -81,13 +81,15 @@ public class Task3 implements Task {
      * @throws IOException в случае ошибок ввода-вывода.
      */
     private void write(File file, Collection<String> collection) throws IOException {
-        Writer writer = new PrintWriter(file);
-        for (String str : collection){
-            writer.write(str);
-            writer.append(System.lineSeparator());
+
+        try(Writer writer = new PrintWriter(file)) {
+            for (String str : collection) {
+                writer.write(str);
+                writer.append(System.lineSeparator());
+            }
+
+            writer.flush();
         }
-        
-        writer.flush();
         
         
     }
