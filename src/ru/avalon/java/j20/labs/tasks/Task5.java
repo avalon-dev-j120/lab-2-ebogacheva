@@ -3,8 +3,14 @@ package ru.avalon.java.j20.labs.tasks;
 import ru.avalon.java.j20.labs.Task;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.Properties;
+import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+
+import static java.util.ResourceBundle.getBundle;
 
 /**
  * Задание №5
@@ -17,7 +23,12 @@ public class Task5 implements Task {
      * {@inheritDoc}
      */
     @Override
-    public void run() throws IOException {
+    public void run() {
+
+       String path = "resources/strings/titles";
+       ResourceBundle bundle1 = read(path);
+       Locale locale = new Locale("ru", "RU");
+       ResourceBundle bundle2 = read(path, locale);
         /*
          * TODO(Студент): Выполнить задание №5
          *
@@ -41,7 +52,11 @@ public class Task5 implements Task {
      * @return новый экземпляр типа {@link ResourceBundle}
      */
     private ResourceBundle read(String path) {
-        throw new UnsupportedOperationException("Not implement yet!");
+
+        ResourceBundle bundle = getBundle(path);
+        return bundle;
+
+        //throw new UnsupportedOperationException("Not implement yet!");
     }
 
     /**
@@ -51,6 +66,9 @@ public class Task5 implements Task {
      * @return новый экземпляр типа {@link ResourceBundle}
      */
     private ResourceBundle read(String path, Locale locale) {
-        throw new UnsupportedOperationException("Not implement yet!");
+
+        ResourceBundle bundle = getBundle(path, locale);
+        return  bundle;
+        //throw new UnsupportedOperationException("Not implement yet!");
     }
 }
